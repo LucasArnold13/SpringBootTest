@@ -1,0 +1,57 @@
+<div class="container-fluid py-4">
+    <div class="row mb-4 align-items-center">
+        <div class="col">
+            <h2 class="display-6 fw-bold text-dark">Benutzerübersicht 🧑‍💻</h2>
+        </div>
+        <div class="col-auto">
+            <a href="/users/create" class="btn btn-lg btn-success shadow-sm d-flex align-items-center">
+                <i class="bi bi-person-plus-fill me-2"></i> User anlegen
+            </a>
+        </div>
+    </div>
+    
+    <div class="card shadow-lg border-0">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped mb-0 align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col" class="py-3 px-4">ID</th>
+                            <th scope="col" class="py-3 px-4">Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr 
+                            th:each="user : ${users}" 
+                            class="clickable-row cursor-pointer" 
+                            th:data-href="@{'/users/' + ${user.id}}"
+                        >
+                            <td th:text="${user.id}" class="py-3 px-4 text-muted"></td>
+                            <td class="py-3 px-4">
+                                <a th:href="@{'/users/' + ${user.id}}" th:text="${user.username}" class="text-decoration-none text-primary fw-semibold"></a>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(users)}">
+                            <td colspan="2" class="text-center py-4 text-muted fst-italic">Keine Benutzer gefunden.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const rows = document.querySelectorAll(".clickable-row");
+        
+        rows.forEach(row => {
+            row.addEventListener("click", function() {
+                const url = this.getAttribute("data-href");
+                if (url) {
+                    window.location.href = url;
+                }
+            });
+        });
+    });
+</script>

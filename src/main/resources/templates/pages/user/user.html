@@ -1,0 +1,33 @@
+<div>
+    <div class="card shadow-sm p-4 bg-white rounded">
+        <div class="d-flex align-items-center mb-4">
+            <img th:src="@{/images/default-user.png}" alt="Profilbild"
+                 class="rounded-circle me-3" width="80" height="80">
+            <div>
+                <h2 th:text="${user.username}" class="mb-0"></h2>
+                <small class="text-muted" th:text="'ID: ' + ${user.id}"></small>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <h6 class="text-muted">E-Mail</h6>
+                <p th:text="${user.email}">test@example.com</p>
+            </div>
+        </div>
+
+        <div class="mt-4 d-flex gap-2">
+            <a th:href="@{/users}" class="btn btn-outline-secondary btn-sm">← Zurück zur Übersicht</a>
+            <a th:href="@{'/user/edit/' + ${user.id}}" class="btn btn-primary btn-sm">Bearbeiten</a>
+
+            <!-- 🗑️ Lösch-Button -->
+            <form th:action="@{'/users/' + ${user.id}}" method="post" 
+                  onsubmit="return confirm('Willst du diesen Benutzer wirklich löschen?');">
+                <input type="hidden" name="_method" value="delete"/>
+                <button type="submit" class="btn btn-danger btn-sm">Löschen</button>
+            </form>
+        </div>
+    </div>
+</div>
